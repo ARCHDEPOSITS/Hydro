@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Website</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        #content {
+            display: none;
+            text-align: center;
+        }
+
+        #loading {
+            text-align: center;
+            font-size: 2em;
+            color: #00ff00; /* Neon color */
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .fade-out {
+            animation: fadeOut 2s forwards;
+        }
+
+        .fade-in {
+            animation: fadeIn 2s forwards;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading">
+        <div>Look.</div>
+        <div>Think.</div>
+        <div>Make.</div>
+    </div>
+    <div id="content">
+        <h1>alterra</h1>
+        <input type="text" placeholder="Type here...">
+    </div>
+
+    <script>
+        const loadingText = document.getElementById('loading');
+        const content = document.getElementById('content');
+
+        function showContent() {
+            loadingText.classList.add('fade-out');
+            setTimeout(() => {
+                loadingText.style.display = 'none';
+                content.style.display = 'block';
+                content.classList.add('fade-in');
+            }, 2000);
+        }
+
+        setTimeout(showContent, 3000); // Adjust the delay as needed
+    </script>
+</body>
+</html>
