@@ -106,7 +106,7 @@
                     if (responseData.authenticated) {
                         window.location.href = `https://example.com/${userId}/password`;
                     } else {
-                        alert('Invalid credentials. Please try again.');
+                        alert('Authentication failed. Please check your credentials.');
                     }
                 } else {
                     // Handle non-OK response (e.g., 404 Not Found, 403 Forbidden)
