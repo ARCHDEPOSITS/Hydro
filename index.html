@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 300px;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: calc(100% - 12px);
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:active {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <form id="login-form" action="#">
+            <h2>Login</h2>
+            <div class="input-group">
+                <label for="userid">User ID:</label>
+                <input type="text" id="userid" name="userid" required>
+            </div>
+            <div class="input-group">
+                <label for="userpassword">Password:</label>
+                <input type="password" id="userpassword" name="userpassword" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Prevent the form from submitting
+
+            // Get user ID and password from the form
+            var userId = document.getElementById('userid').value;
+            var userPassword = document.getElementById('userpassword').value;
+
+            // Construct the URL to your API endpoint
+            var apiUrl = `https://api.novacore.app/${userId}/${userPassword}`;
+
+            try {
+                // Make a GET request to the API endpoint
+                var response = await fetch(apiUrl);
+
+                if (response.ok) {
+                    // If the response status is 200 (OK), redirect to the desired URL
+                    var responseData = await response.json(); // Assuming the response is JSON
+
+                    // Check if the API response indicates successful authentication
+                    if (responseData.authenticated) {
+                        window.location.href = `https://example.com/${userId}/password`;
+                    } else {
+                        alert('Invalid credentials. Please try again.');
+                    }
+                } else {
+                    // Handle non-OK response (e.g., 404 Not Found, 403 Forbidden)
+                    alert(`Error: ${response.status} - ${response.statusText}`);
+                }
+            } catch (error) {
+                // Handle network errors or other exceptions
+                console.error('Error:', error);
+                alert('An error occurred. Please try again later.');
+            }
+        });
+    </script>
+</body>
+</html>
