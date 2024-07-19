@@ -56,17 +56,23 @@
     </div>
 
     <script>
-        function authenticatePlayer() {
-            const playerIdInput = document.getElementById("player_id").value.trim().toLowerCase(); // Ensure lowercase comparison
+        async function fetchValidPlayerIds() {
+            const response = await fetch('player_ids.json');
+            const data = await response.json();
+            return data.valid_player_ids;
+        }
 
-            // Check for specific player IDs and redirect accordingly
-            switch (playerIdInput) {
-                case "alterraoff":
-                    window.location.href = "alterraoff.html";
-                    return false; // Prevent form submission
-                default:
-                    document.getElementById("error_message").innerText = "Invalid Player ID. Please enter a valid ID.";
-                    return false; // Prevent form submission
+        async function authenticatePlayer() {
+            const playerIdInput = document.getElementById("player_id").value.trim().toLowerCase();
+            const validPlayerIds = await fetchValidPlayerIds();
+
+            // Check if entered player ID is in the array of allowed IDs
+            if (validPlayerIds.includes(playerIdInput)) {
+                window.location.href = playerIdInput + ".html"; // Redirect to corresponding player's profile
+                return false; // Prevent form submission
+            } else {
+                document.getElementById("error_message").innerText = "Invalid Player ID. Please enter a valid ID.";
+                return false; // Prevent form submission
             }
         }
     </script>
