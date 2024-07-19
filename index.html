@@ -1,34 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Login Redirect</title>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <meta name="google-signin-client_id" content="756778382813-vs1af4bl4jttfnfb56hh07859rpsca1v.apps.googleusercontent.com">
-    <script>
-        function onSignIn(googleUser) {
-            var profile = googleUser.getBasicProfile();
-            var email = profile.getEmail();
-            if (email.startsWith("hydrounited23")) {
-                window.location.href = "https://hydro.novacore.app/hyddash";
-            } else {
-                alert("Logged in with email: " + email);
-                // Add your logic for other users here
-            }
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Automatic Redirect</title>
+<script>
+    // Function to redirect the user
+    function redirectToNewPage() {
+        // Replace 'https://example.com' with the URL you want to redirect to
+        var redirectTo = 'hydro.novacore.app/index.php';
+        window.location.href = redirectTo;
+    }
 
-        function signOut() {
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function () {
-                console.log('User signed out.');
-            });
-        }
-    </script>
+    // Call the function when the page loads
+    window.onload = redirectToNewPage;
+</script>
 </head>
 <body>
-    <h1>Login with Google</h1>
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-    <a href="#" onclick="signOut();">Sign out</a>
+    <!-- Optional: You can add a message or content here -->
+    <h1>Redirecting...</h1>
 </body>
 </html>
