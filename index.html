@@ -39,6 +39,10 @@
     input[type="submit"]:hover {
         background-color: #45a049;
     }
+    .error-message {
+        color: red;
+        margin-top: 10px;
+    }
 </style>
 </head>
 <body>
@@ -47,24 +51,23 @@
         <form onsubmit="return authenticatePlayer()">
             <input type="text" id="player_id" placeholder="Enter Player ID" required>
             <input type="submit" value="Login">
+            <div id="error_message" class="error-message"></div>
         </form>
     </div>
 
     <script>
         function authenticatePlayer() {
-            const playerIdInput = document.getElementById("player_id").value;
+            const playerIdInput = document.getElementById("player_id").value.trim().toLowerCase(); // Ensure lowercase comparison
 
             // Check for specific player IDs and redirect accordingly
             switch (playerIdInput) {
                 case "alterraoff":
                     window.location.href = "alterraoff.html";
-                    break;
+                    return false; // Prevent form submission
                 default:
-                    window.location.href = "default.html";
-                    break;
+                    document.getElementById("error_message").innerText = "Invalid Player ID. Please enter a valid ID.";
+                    return false; // Prevent form submission
             }
-
-            return false; // Prevent form submission
         }
     </script>
 </body>
