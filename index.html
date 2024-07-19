@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Player Portal</title>
+<title>Alterra Portal</title>
 <style>
     body {
         background-color: #000;
@@ -44,10 +44,28 @@
 <body>
     <div class="container">
         <h2>Player Portal</h2>
-        <form action="authenticate.php" method="post">
-            <input type="text" name="player_id" placeholder="Enter Player ID" required>
+        <form onsubmit="return authenticatePlayer()">
+            <input type="text" id="player_id" placeholder="Enter Player ID" required>
             <input type="submit" value="Login">
         </form>
     </div>
+
+    <script>
+        function authenticatePlayer() {
+            const playerIdInput = document.getElementById("player_id").value;
+
+            // Check for specific player IDs and redirect accordingly
+            switch (playerIdInput) {
+                case "alterraoff":
+                    window.location.href = "alterraoff.html";
+                    break;
+                default:
+                    window.location.href = "default.html";
+                    break;
+            }
+
+            return false; // Prevent form submission
+        }
+    </script>
 </body>
 </html>
