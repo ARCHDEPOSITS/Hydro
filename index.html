@@ -63,7 +63,7 @@
         }
 
         async function authenticatePlayer() {
-            const playerIdInput = document.getElementById("player_id").value.trim().toLowerCase();
+            const playerIdInput = document.getElementById("player_ids.json").value.trim().toLowerCase();
             const validPlayerIds = await fetchValidPlayerIds();
 
             // Check if entered player ID is in the array of allowed IDs
