@@ -74,10 +74,13 @@
             const playerIdInput = document.getElementById("player_id").value.trim().toLowerCase();
             const validPlayerIds = await fetchValidPlayerIds();
 
+            console.log("Valid Player IDs:", validPlayerIds); // Log valid player IDs for debugging
+
             // Check if entered player ID is in the array of allowed IDs
             if (validPlayerIds.includes(playerIdInput)) {
-                console.log("Redirecting to:", playerIdInput + ".html"); // Log for debugging
-                window.location.href = playerIdInput + ".html"; // Redirect to corresponding player's profile
+                const profilePage = playerIdInput + ".html";
+                console.log("Redirecting to:", profilePage); // Log redirection URL for debugging
+                window.location.href = profilePage; // Redirect to corresponding player's profile
                 return false; // Prevent form submission
             } else {
                 document.getElementById("error_message").innerText = "Invalid Player ID. Please enter a valid ID.";
