@@ -57,13 +57,13 @@
 
     <script>
         async function fetchValidPlayerIds() {
-            const response = await fetch('player_ids.json');
+            const response = await fetch('players.json');
             const data = await response.json();
             return data.valid_player_ids;
         }
 
         async function authenticatePlayer() {
-            const playerIdInput = document.getElementById("player_ids.json").value.trim().toLowerCase();
+            const playerIdInput = document.getElementById("player_id").value.trim().toLowerCase();
             const validPlayerIds = await fetchValidPlayerIds();
 
             // Check if entered player ID is in the array of allowed IDs
