@@ -26,12 +26,12 @@ if (isset($_POST['player_id'])) {
     } else {
         // Invalid player_id
         echo "<script>alert('Invalid Player ID. Please try again.');</script>";
-        echo "<script>window.location.replace('index.php');</script>";
+        echo "<script>window.location.replace('index.html');</script>";
         exit;
     }
 } else {
     // Redirect to index.php if accessed directly without POST data
-    header("Location: index.php");
+    header("Location: index.html");
     exit;
 }
 ?>
