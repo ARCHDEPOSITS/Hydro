@@ -1,1 +1,5 @@
-
+[
+    {"userId": "user123", "name": "John Doe"},
+    {"userId": "user456", "name": "Jane Smith"},
+    {"userId": "user789", "name": "Michael Johnson"}
+]
