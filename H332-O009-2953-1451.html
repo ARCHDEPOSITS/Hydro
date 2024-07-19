@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H332-O009-2953-1451 Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .dashboard-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+
+        .options-container {
+            margin-top: 20px;
+        }
+
+        .option {
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+            border-radius: 5px;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .option:hover {
+            background-color: #45a049;
+        }
+
+        .option:active {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h2>Welcome to H332-O009-2953-1451 Dashboard</h2>
+        <div class="username">
+            <!-- Display the username dynamically here -->
+            <span id="username"></span>
+        </div>
+        <div class="options-container">
+            <button class="option" id="option1">Option 1</button>
+            <button class="option" id="option2">Option 2</button>
+            <button class="option" id="option3">Option 3</button>
+            <!-- Add more options as needed -->
+        </div>
+    </div>
+
+    <script>
+        // Get the username from the query parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const username = urlParams.get('name');
+
+        // Set the username in the dashboard
+        document.getElementById('username').textContent = `Hello, ${username}!`;
+
+        // Function to handle option clicks
+        document.getElementById('option1').addEventListener('click', function() {
+            // Redirect to option1.html with username as query parameter
+            window.location.href = `option1.html?name=${encodeURIComponent(username)}`;
+        });
+
+        document.getElementById('option2').addEventListener('click', function() {
+            // Redirect to option2.html with username as query parameter
+            window.location.href = `option2.html?name=${encodeURIComponent(username)}`;
+        });
+
+        document.getElementById('option3').addEventListener('click', function() {
+            // Redirect to option3.html with username as query parameter
+            window.location.href = `option3.html?name=${encodeURIComponent(username)}`;
+        });
+    </script>
+</body>
+</html>
