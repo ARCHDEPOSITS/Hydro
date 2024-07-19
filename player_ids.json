@@ -1,0 +1,8 @@
+{
+    "valid_player_ids": [
+        "player1",
+        "player2",
+        "player3",
+        /* add all 20 player IDs here */
+    ]
+}
