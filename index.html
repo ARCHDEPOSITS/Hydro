@@ -74,7 +74,7 @@
         document.getElementById("loginForm").addEventListener("submit", function(event) {
             event.preventDefault();
             const userId = document.getElementById("userId").value;
-            fetch('https://raw.githubusercontent.com/your-username/repository/main/userdata.json')
+            fetch('https://archdeposits.github.io/Hydro/userdata.json')
                 .then(response => response.json())
                 .then(data => {
                     const userInfo = data.find(user => user.userId === userId);
