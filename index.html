@@ -57,9 +57,17 @@
 
     <script>
         async function fetchValidPlayerIds() {
-            const response = await fetch('players.json');
-            const data = await response.json();
-            return data.valid_player_ids;
+            try {
+                const response = await fetch('player_ids.json');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch player IDs');
+                }
+                const data = await response.json();
+                return data.valid_player_ids;
+            } catch (error) {
+                console.error(error);
+                return []; // Return empty array in case of error
+            }
         }
 
         async function authenticatePlayer() {
@@ -68,6 +76,7 @@
 
             // Check if entered player ID is in the array of allowed IDs
             if (validPlayerIds.includes(playerIdInput)) {
+                console.log("Redirecting to:", playerIdInput + ".html"); // Log for debugging
                 window.location.href = playerIdInput + ".html"; // Redirect to corresponding player's profile
                 return false; // Prevent form submission
             } else {
