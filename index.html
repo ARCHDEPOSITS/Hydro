@@ -1,93 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Player Portal</title>
-<style>
-    body {
-        background-color: #000;
-        color: #fff;
-        font-family: Arial, sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-    }
-    .container {
-        background-color: #333;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.3);
-        max-width: 400px;
-        width: 100%;
-        text-align: center;
-    }
-    input[type="text"], input[type="submit"] {
-        padding: 10px;
-        margin: 10px 0;
-        width: calc(100% - 22px);
-        font-size: 16px;
-    }
-    input[type="submit"] {
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        cursor: pointer;
-    }
-    input[type="submit"]:hover {
-        background-color: #45a049;
-    }
-    .error-message {
-        color: red;
-        margin-top: 10px;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alterra Login Services</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .login-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            margin-bottom: 10px;
+        }
+
+        input {
+            padding: 8px;
+            margin-bottom: 15px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px;
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        p {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Player Portal</h2>
-        <form onsubmit="return authenticatePlayer()">
-            <input type="text" id="player_id" placeholder="Enter Player ID" required>
-            <input type="submit" value="Login">
-            <div id="error_message" class="error-message"></div>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <label for="userId">User ID:</label>
+            <input type="text" id="userId" name="userId" required>
+            <button type="submit">Login</button>
         </form>
+        <p id="result"></p>
     </div>
 
     <script>
-        async function fetchValidPlayerIds() {
-            try {
-                const response = await fetch('player_ids.json');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch player IDs');
-                }
-                const data = await response.json();
-                return data.valid_player_ids;
-            } catch (error) {
-                console.error('Error fetching player IDs:', error);
-                return []; // Return empty array in case of error
-            }
-        }
-
-        async function authenticatePlayer() {
-            const playerIdInput = document.getElementById("player_id").value.trim().toLowerCase();
-            const validPlayerIds = await fetchValidPlayerIds();
-
-            console.log("Entered Player ID:", playerIdInput); // Log entered player ID for debugging
-            console.log("Valid Player IDs:", validPlayerIds); // Log valid player IDs for debugging
-
-            // Check if entered player ID is in the array of allowed IDs
-            if (validPlayerIds.includes(playerIdInput)) {
-                const profilePage = playerIdInput + ".html";
-                console.log("Redirecting to:", profilePage); // Log redirection URL for debugging
-                window.location.href = profilePage; // Redirect to corresponding player's profile
-                return false; // Prevent form submission
-            } else {
-                document.getElementById("error_message").innerText = "Invalid Player ID. Please enter a valid ID.";
-                return false; // Prevent form submission
-            }
-        }
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const userId = document.getElementById("userId").value;
+            fetch('https://raw.githubusercontent.com/your-username/repository/main/userdata.json')
+                .then(response => response.json())
+                .then(data => {
+                    const userInfo = data.find(user => user.userId === userId);
+                    if (userInfo) {
+                        document.getElementById("result").textContent = `Welcome, ${userInfo.name}!`;
+                    } else {
+                        document.getElementById("result").textContent = "User ID not found.";
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    document.getElementById("result").textContent = "Failed to fetch data.";
+                });
+        });
     </script>
 </body>
 </html>
