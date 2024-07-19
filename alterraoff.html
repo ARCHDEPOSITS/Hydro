@@ -10,51 +10,46 @@
         background-color: #000;
         color: #fff;
         font-family: Arial, sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
         margin: 0;
-    }
-    .container {
         display: flex;
-        max-width: 800px;
-        width: 100%;
     }
     .sidebar {
         background-color: #333;
-        padding: 20px;
         width: 200px;
+        height: 100vh;
+        padding: 20px;
     }
     .content {
-        padding: 20px;
         flex: 1;
+        padding: 20px;
     }
     .category-list {
         list-style: none;
         padding: 0;
         font-family: 'Major Mono Display', monospace;
         font-size: 18px;
+        margin-top: 0;
     }
     .category-list li {
         margin-bottom: 10px;
     }
+    h2 {
+        margin-top: 0;
+    }
 </style>
 </head>
 <body>
-    <div class="container">
-        <div class="sidebar">
-            <h2>Categories</h2>
-            <ul class="category-list">
-                <li>News!</li>
-                <li>Jerseys!</li>
-                <li>Admin Dashboard</li>
-            </ul>
-        </div>
-        <div class="content">
-            <h2>Alterraoff Profile</h2>
-            <h2>The Offical Alterra Profile</h2>
-        </div>
+    <div class="sidebar">
+        <h2>Categories</h2>
+        <ul class="category-list">
+            <li>Category 1</li>
+            <li>Category 2</li>
+            <li>Category 3</li>
+        </ul>
+    </div>
+    <div class="content">
+        <h2>Alterraoff Profile</h2>
+        <!-- Add more content specific to Alterraoff -->
     </div>
 </body>
 </html>
