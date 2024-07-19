@@ -65,7 +65,7 @@
                 const data = await response.json();
                 return data.valid_player_ids;
             } catch (error) {
-                console.error(error);
+                console.error('Error fetching player IDs:', error);
                 return []; // Return empty array in case of error
             }
         }
@@ -74,6 +74,7 @@
             const playerIdInput = document.getElementById("player_id").value.trim().toLowerCase();
             const validPlayerIds = await fetchValidPlayerIds();
 
+            console.log("Entered Player ID:", playerIdInput); // Log entered player ID for debugging
             console.log("Valid Player IDs:", validPlayerIds); // Log valid player IDs for debugging
 
             // Check if entered player ID is in the array of allowed IDs
