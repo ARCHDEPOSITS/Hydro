@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Page</title>
+  <title>HYD PORTAL</title>
   <style>
     body {
       display: flex;
@@ -17,7 +17,6 @@
     }
 
     .login-container {
-      display: none; /* Initially hidden */
       background-color: #333;
       padding: 20px;
       border-radius: 10px; /* Rounded corners */
@@ -115,18 +114,6 @@
   </div>
 
   <script>
-    // Function to toggle login visibility based on local storage
-    function toggleLoginVisibility() {
-      var loginContainer = document.getElementById('loginContainer');
-      var loginVisible = localStorage.getItem('loginVisible');
-
-      if (loginVisible === 'true') {
-        loginContainer.style.display = 'block';
-      } else {
-        loginContainer.style.display = 'none';
-      }
-    }
-
     document.getElementById('loginForm').addEventListener('submit', function(event) {
       event.preventDefault(); // Prevent the form from submitting
       
@@ -134,7 +121,7 @@
       let userId = document.getElementById('userId').value.trim();
       
       // Fetch user data from JSON file
-      fetch('https://hydro.novacore.app/userdata.json')
+      fetch('https://hydro.novacore.app')
         .then(response => response.json())
         .then(data => {
           // Check if the entered userId exists in the JSON data
@@ -148,26 +135,26 @@
                 <div class="sidebar">
                   <div class="welcome-message">Welcome, ${personName}</div>
                   <ul>
-                    <li><a href="#" onclick="changeContent('Matches', 'Next Match', 'ALTERRA_VINA_HYD_MATCHDATA')">Matches</a></li>
-                    <li><a href="#" onclick="changeContent('Title 2', 'Subtext 2', 'Text 2')">Option 2</a></li>
-                    <li><a href="#" onclick="changeContent('Title 3', 'Subtext 3', 'Text 3')">Option 3</a></li>
+                    <li><a href="#" onclick="changeContent('Matches', 'Next Match', 'Alterra_VINA_HYD_MatchData')">Matches</a></li>
+                    <li><a href="#" onclick="changeContent('News', '20/7/24', 'TADA, The HYD Player Portal Got Released')">News</a></li>
+                    <li><a href="#" onclick="changeContent('Jerseys', 'All Jerseys', 'Alterra_VINA_LStore_HYD_Jersey_SecureEN')">Jerseys</a></li>
                   </ul>
                 </div>
                 <div class="main-content" id="mainContent">
-                  <h2>Title</h2>
-                  <p>Subtext</p>
-                  <p>Text</p>
+                  <h2>HYD Portal</h2>
+                  <p>Real Deal</p>
+                  <p>Good Is HIM</p>
                 </div>
               </div>
             `;
           } else {
             // Display error message for invalid user ID
-            document.getElementById('errorMessage').textContent = 'Invalid User ID. Please try again.';
+            document.getElementById('errorMessage').textContent = 'No Alterra Account With That ID.';
           }
         })
         .catch(error => {
           console.error('Error fetching JSON:', error);
-          document.getElementById('errorMessage').textContent = 'Error fetching user data. Please try again later.';
+          document.getElementById('errorMessage').textContent = 'Alterra_Services_Portal_ERR=01';
         });
     });
 
@@ -179,9 +166,6 @@
         <p>${text}</p>
       `;
     }
-
-    // Call toggleLoginVisibility on page load
-    toggleLoginVisibility();
   </script>
 </body>
 </html>
