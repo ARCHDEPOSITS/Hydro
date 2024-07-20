@@ -17,6 +17,7 @@
     }
 
     .login-container {
+      display: none; /* Initially hidden */
       background-color: #333;
       padding: 20px;
       border-radius: 5px;
@@ -51,7 +52,7 @@
   </style>
 </head>
 <body>
-  <div class="login-container">
+  <div class="login-container" id="loginContainer">
     <h2>Login</h2>
     <form id="loginForm">
       <input type="text" id="userId" placeholder="Enter User ID">
@@ -61,35 +62,34 @@
   </div>
 
   <script>
+    // Function to toggle login visibility based on local storage
+    function toggleLoginVisibility() {
+      var loginContainer = document.getElementById('loginContainer');
+      var loginVisible = localStorage.getItem('loginVisible');
+
+      if (loginVisible === 'true') {
+        loginContainer.style.display = 'block';
+      } else {
+        loginContainer.style.display = 'none';
+      }
+    }
+
     document.getElementById('loginForm').addEventListener('submit', function(event) {
       event.preventDefault(); // Prevent the form from submitting
       
       // Fetch user ID entered by the user
       let userId = document.getElementById('userId').value.trim();
       
-      // Fetch user data from JSON file
-      fetch('https://archdeposits.github.io/Hydro/userdata.json')
-        .then(response => response.json())
-        .then(data => {
-          // Check if the entered userId exists in the JSON data
-          if (data.hasOwnProperty(userId)) {
-            // Successful login, replace current page content with dashboard
-            document.body.innerHTML = `
-              <div class="dashboard">
-                <h2>Welcome, ${data[userId]}</h2>
-                <p>This is your dashboard.</p>
-              </div>
-            `;
-          } else {
-            // Display error message for invalid user ID
-            document.getElementById('errorMessage').textContent = 'Invalid User ID. Please try again.';
-          }
-        })
-        .catch(error => {
-          console.error('Error fetching JSON:', error);
-          document.getElementById('errorMessage').textContent = 'Error fetching user data. Please try again later.';
-        });
+      // Simulated login check (replace with actual logic)
+      if (userId === 'admin') { // Example: 'admin' is considered a valid user ID
+        alert('Login successful!'); // Replace with your action upon successful login
+      } else {
+        document.getElementById('errorMessage').textContent = 'Invalid User ID. Please try again.';
+      }
     });
+
+    // Call toggleLoginVisibility on page load
+    toggleLoginVisibility();
   </script>
 </body>
 </html>
