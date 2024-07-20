@@ -20,8 +20,9 @@
       display: none; /* Initially hidden */
       background-color: #333;
       padding: 20px;
-      border-radius: 5px;
+      border-radius: 10px; /* Rounded corners */
       text-align: center;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Shadow effect */
     }
 
     input[type="text"], button {
@@ -29,13 +30,16 @@
       margin: 5px;
       width: 200px;
       display: block;
+      border: none;
+      border-radius: 5px; /* Rounded corners */
+      font-size: 16px;
     }
 
     button {
       background-color: #4CAF50;
       color: white;
-      border: none;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
 
     button:hover {
