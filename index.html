@@ -54,6 +54,8 @@
 
     .dashboard {
       display: flex;
+      max-width: 800px; /* Limit dashboard width */
+      margin: 0 auto; /* Center dashboard horizontally */
     }
 
     .sidebar {
@@ -67,6 +69,9 @@
     .main-content {
       flex: 1;
       padding: 20px;
+      background-color: #444;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
     }
 
     .sidebar ul {
@@ -129,14 +134,15 @@
               <div class="dashboard">
                 <div class="sidebar">
                   <ul>
-                    <li><a href="#">Option 1</a></li>
-                    <li><a href="#">Option 2</a></li>
-                    <li><a href="#">Option 3</a></li>
+                    <li><a href="#" onclick="changeContent('Title', 'Subtext', 'Text')">News</a></li>
+                    <li><a href="#" onclick="changeContent('Title', 'Subtext', 'Text')">Jerseys</a></li>
+                    <li><a href="#" onclick="changeContent('Title', 'Subtext', 'Text')">Matches</a></li>
                   </ul>
                 </div>
-                <div class="main-content">
-                  <h2>Welcome, ${data[userId]}</h2>
-                  <p>This is your dashboard.</p>
+                <div class="main-content" id="mainContent">
+                  <h2>Title</h2>
+                  <p>Subtext</p>
+                  <p>Text</p>
                 </div>
               </div>
             `;
@@ -150,6 +156,15 @@
           document.getElementById('errorMessage').textContent = 'Error fetching user data. Please try again later.';
         });
     });
+
+    // Function to change content in main content area
+    function changeContent(title, subtext, text) {
+      document.getElementById('mainContent').innerHTML = `
+        <h2>${title}</h2>
+        <p>${subtext}</p>
+        <p>${text}</p>
+      `;
+    }
 
     // Call toggleLoginVisibility on page load
     toggleLoginVisibility();
