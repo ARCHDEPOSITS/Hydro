@@ -1,95 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-            font-family: Arial, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #222;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
 
-        .login-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 300px;
-        }
+    .login-container {
+      background-color: #333;
+      padding: 20px;
+      border-radius: 5px;
+      text-align: center;
+    }
 
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    input[type="text"], button {
+      padding: 10px;
+      margin: 5px;
+      width: 200px;
+      display: block;
+    }
 
-        label {
-            margin-bottom: 10px;
-        }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
 
-        input {
-            padding: 8px;
-            margin-bottom: 15px;
-            width: 100%;
-            box-sizing: border-box;
-        }
+    button:hover {
+      background-color: #45a049;
+    }
 
-        button {
-            padding: 10px;
-            width: 100%;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
+    #errorMessage {
+      color: red;
+    }
 
-        button:hover {
-            background-color: #45a049;
-        }
-
-        p {
-            margin-top: 20px;
-            font-weight: bold;
-        }
-    </style>
+    .dashboard {
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-    <div class="login-container">
-        <h2>Login</h2>
-        <form id="loginForm">
-            <label for="userId">User ID:</label>
-            <input type="text" id="userId" name="userId" required>
-            <button type="submit">Login</button>
-        </form>
-        <p id="result"></p>
-    </div>
+  <div class="login-container">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <input type="text" id="userId" placeholder="Enter User ID">
+      <button type="submit">Login</button>
+    </form>
+    <p id="errorMessage"></p>
+  </div>
 
-    <script>
-        document.getElementById("loginForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-            const userId = document.getElementById("userId").value;
-            fetch('https://archdeposits.github.io/Hydro/userdata.json')
-                .then(response => response.json())
-                .then(data => {
-                    const userInfo = data.find(user => user.userId === userId);
-                    if (userInfo) {
-                        // Redirect to another page upon successful login
-                        window.location.href = `H332-O009-2953-1451.html?name=${userInfo.name}`;
-                    } else {
-                        document.getElementById("result").textContent = "User ID not found.";
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                    document.getElementById("result").textContent = "Failed to fetch data.";
-                });
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the form from submitting
+      
+      // Fetch user ID entered by the user
+      let userId = document.getElementById('userId').value.trim();
+      
+      // Fetch user data from JSON file
+      fetch('https://archdeposits.github.io/Hydro/userdata.json')
+        .then(response => response.json())
+        .then(data => {
+          // Check if the entered userId exists in the JSON data
+          if (data.hasOwnProperty(userId)) {
+            // Successful login, replace current page content with dashboard
+            document.body.innerHTML = `
+              <div class="dashboard">
+                <h2>Welcome, ${data[userId]}</h2>
+                <p>This is your dashboard.</p>
+              </div>
+            `;
+          } else {
+            // Display error message for invalid user ID
+            document.getElementById('errorMessage').textContent = 'Invalid User ID. Please try again.';
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching JSON:', error);
+          document.getElementById('errorMessage').textContent = 'Error fetching user data. Please try again later.';
         });
-    </script>
+    });
+  </script>
 </body>
 </html>
