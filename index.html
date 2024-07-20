@@ -53,7 +53,39 @@
     }
 
     .dashboard {
-      text-align: center;
+      display: flex;
+    }
+
+    .sidebar {
+      width: 200px;
+      background-color: #333;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .sidebar ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .sidebar li {
+      margin-bottom: 10px;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+    }
+
+    .sidebar a:hover {
+      color: #4CAF50;
     }
   </style>
 </head>
@@ -95,8 +127,17 @@
             // Successful login, replace current page content with dashboard
             document.body.innerHTML = `
               <div class="dashboard">
-                <h2>Welcome, ${data[userId]}</h2>
-                <p>This is your dashboard.</p>
+                <div class="sidebar">
+                  <ul>
+                    <li><a href="#">Option 1</a></li>
+                    <li><a href="#">Option 2</a></li>
+                    <li><a href="#">Option 3</a></li>
+                  </ul>
+                </div>
+                <div class="main-content">
+                  <h2>Welcome, ${data[userId]}</h2>
+                  <p>This is your dashboard.</p>
+                </div>
               </div>
             `;
           } else {
