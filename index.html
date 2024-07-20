@@ -101,6 +101,11 @@
     .sidebar a:hover {
       color: #4CAF50;
     }
+
+    .main-content {
+      margin-left: 220px; /* Adjusted to accommodate sidebar width */
+      padding: 20px;
+    }
   </style>
 </head>
 <body>
@@ -122,18 +127,23 @@
       
       // Fetch user data from JSON file
       fetch('https://hydro.novacore.app/userdata.json')
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
         .then(data => {
           // Check if the entered userId exists in the JSON data
           if (data.hasOwnProperty(userId)) {
             // Get the person's name from JSON data
-            let personName = data[userId].name;
+            let personName = data[userId];
 
             // Successful login, replace current page content with dashboard
             document.body.innerHTML = `
               <div class="dashboard">
                 <div class="sidebar">
-                  <div class="welcome-message">Welcome!</div>
+                  <div class="welcome-message">Welcome, ${personName}</div>
                   <ul>
                     <li><a href="#" onclick="changeContent('Matches', 'Next Match', 'Alterra_VINA_HYD_MatchData')">Matches</a></li>
                     <li><a href="#" onclick="changeContent('News', '20/7/24', 'TADA, The HYD Player Portal Got Released')">News</a></li>
