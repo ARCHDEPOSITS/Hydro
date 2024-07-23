@@ -1,181 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HYD PORTAL</title>
-  <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #222;
-      margin: 0;
-      font-family: Arial, sans-serif;
-      color: white;
-    }
-
-    .login-container {
-      background-color: #333;
-      padding: 20px;
-      border-radius: 10px; /* Rounded corners */
-      text-align: center;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Shadow effect */
-    }
-
-    input[type="text"], button {
-      padding: 10px;
-      margin: 5px;
-      width: 200px;
-      display: block;
-      border: none;
-      border-radius: 5px; /* Rounded corners */
-      font-size: 16px;
-    }
-
-    button {
-      background-color: #4CAF50;
-      color: white;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      width: 150px; /* Smaller width */
-      margin: 10px auto 0; /* Centered below the input */
-    }
-
-    button:hover {
-      background-color: #45a049;
-    }
-
-    #errorMessage {
-      color: red;
-    }
-
-    .dashboard {
-      display: flex;
-      max-width: 800px; /* Limit dashboard width */
-      margin: 0 auto; /* Center dashboard horizontally */
-    }
-
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100vh;
-      width: 200px;
-      background-color: #333;
-      padding: 20px;
-      border-radius: 10px; /* Rounded corners */
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-    }
-
-    .welcome-message {
-      color: white;
-      font-weight: bold;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .sidebar ul {
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
-      width: 100%;
-      text-align: center;
-    }
-
-    .sidebar li {
-      margin-bottom: 10px;
-    }
-
-    .sidebar a {
-      text-decoration: none;
-      color: white;
-      font-size: 18px;
-    }
-
-    .sidebar a:hover {
-      color: #4CAF50;
-    }
-
-    .main-content {
-      margin-left: 220px; /* Adjusted to accommodate sidebar width */
-      padding: 20px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Authentication</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            max-width: 300px;
+            text-align: center;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-  <div class="login-container" id="loginContainer">
-    <h2>Login</h2>
-    <form id="loginForm">
-      <input type="text" id="userId" placeholder="Enter User ID">
-      <button type="submit">Login</button>
-    </form>
-    <p id="errorMessage"></p>
-  </div>
+    <div class="container" id="login-container">
+        <h2>Login</h2>
+        <input type="email" id="email" placeholder="Email" required><br><br>
+        <input type="password" id="password" placeholder="Password" required><br><br>
+        <button id="login-btn">Login</button>
+        <p>Don't have an account? <button id="signup-btn">Sign Up</button></p>
+    </div>
 
-  <script>
-    document.getElementById('loginForm').addEventListener('submit', function(event) {
-      event.preventDefault(); // Prevent the form from submitting
-      
-      // Fetch user ID entered by the user
-      let userId = document.getElementById('userId').value.trim();
-      
-      // Fetch user data from JSON file
-      fetch('https://hydro.novacore.app/userdata.json')
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then(data => {
-          // Check if the entered userId exists in the JSON data
-          if (data.hasOwnProperty(userId)) {
-            // Get the person's name from JSON data
-            let personName = data[userId];
+    <div class="container hidden" id="dashboard-container">
+        <h2>Welcome, <span id="user-email"></span>!</h2>
+        <button id="logout-btn">Logout</button>
+    </div>
 
-            // Successful login, replace current page content with dashboard
-            document.body.innerHTML = `
-              <div class="dashboard">
-                <div class="sidebar">
-                  <div class="welcome-message">Welcome, ${personName}</div>
-                  <ul>
-                    <li><a href="#" onclick="changeContent('Matches', 'Next Match', 'Alterra_VINA_HYD_Match')">Matches</a></li>
-                    <li><a href="#" onclick="changeContent('News', '20/7/24', 'TADA, The HYD Player Portal Got Released')">News</a></li>
-                    <li><a href="#" onclick="changeContent('Jerseys', 'All Jerseys', 'Alterra_VINA_LStore_HYD_Jersey_SecureEN')">Jerseys</a></li>
-                  </ul>
-                </div>
-                <div class="main-content" id="mainContent">
-                  <h2>HYD Portal</h2>
-                  <p>Real Deal</p>
-                  <p>Good Is HIM</p>
-                </div>
-              </div>
-            `;
-          } else {
-            // Display error message for invalid user ID
-            document.getElementById('errorMessage').textContent = 'No Alterra Account With That ID.';
-          }
-        })
-        .catch(error => {
-          console.error('Error fetching JSON:', error);
-          document.getElementById('errorMessage').textContent = 'Alterra_Services_Portal_ERR=01';
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <!-- Firebase Authentication -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        const loginContainer = document.getElementById('login-container');
+        const dashboardContainer = document.getElementById('dashboard-container');
+        const userEmail = document.getElementById('user-email');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const loginBtn = document.getElementById('login-btn');
+        const signupBtn = document.getElementById('signup-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                loginContainer.classList.add('hidden');
+                dashboardContainer.classList.remove('hidden');
+                userEmail.textContent = user.email;
+            } else {
+                loginContainer.classList.remove('hidden');
+                dashboardContainer.classList.add('hidden');
+            }
         });
-    });
 
-    // Function to change content in main content area
-    function changeContent(title, subtext, text) {
-      document.getElementById('mainContent').innerHTML = `
-        <h2>${title}</h2>
-        <p>${subtext}</p>
-        <p>${text}</p>
-      `;
-    }
-  </script>
+        loginBtn.addEventListener('click', () => {
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .catch(error => {
+                    alert(error.message);
+                });
+        });
+
+        signupBtn.addEventListener('click', () => {
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+                .catch(error => {
+                    alert(error.message);
+                });
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            firebase.auth().signOut();
+        });
+    </script>
 </body>
 </html>
