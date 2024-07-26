@@ -3,96 +3,232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Firebase Authentication</title>
+    <title>Hydro United - HYD</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+            color: #333;
+            line-height: 1.6;
         }
+
         .container {
-            max-width: 300px;
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        header {
+            background: #50b3a2;
+            color: #fff;
+            padding: 1rem 0;
+        }
+
+        header h1 {
+            display: inline;
+        }
+
+        header .tag {
+            font-size: 0.8em;
+            font-weight: normal;
+        }
+
+        header nav {
+            float: right;
+        }
+
+        header nav ul {
+            list-style: none;
+        }
+
+        header nav ul li {
+            display: inline;
+            margin-left: 10px;
+        }
+
+        header nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        section {
+            padding: 2rem 0;
+        }
+
+        #home {
+            background: #e1e1e1;
             text-align: center;
         }
-        .hidden {
+
+        #about, #team, #contact {
+            background: #f4f4f4;
+        }
+
+        .team-members {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .member {
+            text-align: center;
+            margin: 1rem;
+        }
+
+        .member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form label {
+            margin-top: 0.5rem;
+        }
+
+        form input, form textarea {
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        form button {
+            margin-top: 1rem;
+            padding: 0.7rem;
+            background: #50b3a2;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background: #3a7f72;
+        }
+
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        #maintenance-message {
             display: none;
+            text-align: center;
+            padding: 2rem;
+            background: #f4f4f4;
         }
     </style>
 </head>
 <body>
-    <div class="container" id="login-container">
-        <h2>Login</h2>
-        <input type="email" id="email" placeholder="Email" required><br><br>
-        <input type="password" id="password" placeholder="Password" required><br><br>
-        <button id="login-btn">Login</button>
-        <p>Don't have an account? <button id="signup-btn">Sign Up</button></p>
+    <header>
+        <div class="container">
+            <h1>Hydro United <span class="tag">HYD</span></h1>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#team">Team</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home">
+        <div class="container">
+            <h2>Welcome to Hydro United</h2>
+            <p>Your ultimate football experience.</p>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2>About Us</h2>
+            <p>Hydro United (HYD) is a premier football club committed to excellence both on and off the field. Our mission is to foster talent and inspire a new generation of football enthusiasts.</p>
+        </div>
+    </section>
+
+    <section id="team">
+        <div class="container">
+            <h2>Meet the Team</h2>
+            <div class="team-members">
+                <div class="member">
+                    <img src="player1.jpg" alt="Player 1">
+                    <h3>Player 1</h3>
+                    <p>Position: Forward</p>
+                </div>
+                <div class="member">
+                    <img src="player2.jpg" alt="Player 2">
+                    <h3>Player 2</h3>
+                    <p>Position: Midfielder</p>
+                </div>
+                <!-- Add more team members as needed -->
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <form id="contact-form">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </section>
+
+    <div id="maintenance-message">
+        <h2>Sorry :(</h2>
+        <p>Our page is down for maintenance.</p>
     </div>
 
-    <div class="container hidden" id="dashboard-container">
-        <h2>Welcome, <span id="user-email"></span>!</h2>
-        <button id="logout-btn">Logout</button>
-    </div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Hydro United. All rights reserved.</p>
+        </div>
+    </footer>
 
-    <!-- Firebase App (the core Firebase SDK) -->
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-    <!-- Firebase Authentication -->
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
     <script>
-        // Your web app's Firebase configuration
-        var firebaseConfig = {
-            apiKey: "AIzaSyDBnYpyNuQ_ff7v5LeoZZwJbjdAa2VcsFE",
-            authDomain: "tset-9e3d0.firebaseapp.com",
-            projectId: "tset-9e3d0",
-            storageBucket: "tset-9e3d0.appspot.com",
-            messagingSenderId: "328152190837",
-            appId: "1:328152190837:web:af95c76e00787c6d6d4d3c"
-        };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
+        document.getElementById('contact-form').addEventListener('submit', function(event) {
+            event.preventDefault();
 
-        const loginContainer = document.getElementById('login-container');
-        const dashboardContainer = document.getElementById('dashboard-container');
-        const userEmail = document.getElementById('user-email');
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
-        const loginBtn = document.getElementById('login-btn');
-        const signupBtn = document.getElementById('signup-btn');
-        const logoutBtn = document.getElementById('logout-btn');
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            const timestamp = new Date().toLocaleString();
 
-        firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-                loginContainer.classList.add('hidden');
-                dashboardContainer.classList.remove('hidden');
-                userEmail.textContent = user.email;
-            } else {
-                loginContainer.classList.remove('hidden');
-                dashboardContainer.classList.add('hidden');
+            const submission = { name, email, message, timestamp };
+            let submissions = JSON.parse(localStorage.getItem('submissions')) || [];
+            submissions.push(submission);
+            localStorage.setItem('submissions', JSON.stringify(submissions));
+
+            alert('Message sent! Thank you for contacting us.');
+            document.getElementById('contact-form').reset();
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const maintenanceMode = localStorage.getItem('maintenanceMode');
+            if (maintenanceMode === 'on') {
+                document.getElementById('home').style.display = 'none';
+                document.getElementById('about').style.display = 'none';
+                document.getElementById('team').style.display = 'none';
+                document.getElementById('contact').style.display = 'none';
+                document.getElementById('maintenance-message').style.display = 'block';
             }
-        });
-
-        loginBtn.addEventListener('click', () => {
-            const email = emailInput.value;
-            const password = passwordInput.value;
-            firebase.auth().signInWithEmailAndPassword(email, password)
-                .catch(error => {
-                    alert(error.message);
-                });
-        });
-
-        signupBtn.addEventListener('click', () => {
-            const email = emailInput.value;
-            const password = passwordInput.value;
-            firebase.auth().createUserWithEmailAndPassword(email, password)
-                .catch(error => {
-                    alert(error.message);
-                });
-        });
-
-        logoutBtn.addEventListener('click', () => {
-            firebase.auth().signOut();
         });
     </script>
 </body>
