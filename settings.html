@@ -80,3 +80,93 @@
 
         .submissions-container {
             margin-top: 2rem
+        .submissions-container {
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .submissions-container div {
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .submissions-container p {
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="settings-container" id="settings-container">
+        <h2>Enter Password to Access Settings</h2>
+        <form id="password-form">
+            <input type="password" id="password" placeholder="Enter password" required>
+            <button type="submit">Submit</button>
+        </form>
+        <div id="settings-content" style="display: none;">
+            <h2>Maintenance Mode</h2>
+            <div class="toggle-container">
+                <span class="toggle-label">Enable Maintenance Mode:</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="maintenance-toggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <h2>Contact Submissions</h2>
+            <div class="submissions-container" id="submissions-container">
+                <!-- Submissions will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const correctPassword = 'yourpassword';  // Replace with your desired password
+
+        document.getElementById('password-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const enteredPassword = document.getElementById('password').value;
+
+            if (enteredPassword === correctPassword) {
+                document.getElementById('settings-content').style.display = 'block';
+                document.getElementById('password-form').style.display = 'none';
+                loadSubmissions();
+            } else {
+                alert('Incorrect password');
+            }
+        });
+
+        function loadSubmissions() {
+            const submissionsContainer = document.getElementById('submissions-container');
+            const submissions = JSON.parse(localStorage.getItem('submissions')) || [];
+            submissions.forEach(submission => {
+                const submissionElement = document.createElement('div');
+                submissionElement.innerHTML = `
+                    <p><strong>Name:</strong> ${submission.name}</p>
+                    <p><strong>Email:</strong> ${submission.email}</p>
+                    <p><strong>Message:</strong> ${submission.message}</p>
+                    <p><strong>Timestamp:</strong> ${submission.timestamp}</p>
+                    <hr>
+                `;
+                submissionsContainer.appendChild(submissionElement);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const maintenanceToggle = document.getElementById('maintenance-toggle');
+            const maintenanceMode = localStorage.getItem('maintenanceMode');
+            if (maintenanceMode === 'on') {
+                maintenanceToggle.checked = true;
+            }
+
+            maintenanceToggle.addEventListener('change', function() {
+                if (maintenanceToggle.checked) {
+                    localStorage.setItem('maintenanceMode', 'on');
+                } else {
+                    localStorage.setItem('maintenanceMode', 'off');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
